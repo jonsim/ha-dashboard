@@ -1,0 +1,23 @@
+Jonsim Dashboard:
+  primary-color: "#b96746"
+  accent-color: "#b96746"
+  primary-background-color: "#f7f8f6"
+  secondary-background-color: "#ffffff"
+  card-background-color: "#ffffff"
+  primary-text-color: "#171918"
+  secondary-text-color: "#735858"
+  divider-color: "#d8ddd8"
+  ha-card-border-radius: "8px"
+  ha-card-box-shadow: "none"
+  lovelace-background: "#f7f8f6"
+  modes:
+    dark:
+      primary-color: "#d6845f"
+      accent-color: "#d6845f"
+      primary-background-color: "#141210"
+      secondary-background-color: "#1c1916"
+      card-background-color: "#1c1916"
+      primary-text-color: "#f4f0ea"
+      secondary-text-color: "#c2afa4"
+      divider-color: "#39312b"
+      lovelace-background: "#141210"

@@ -1,0 +1,16 @@
+# Merge these entries into /config/configuration.yaml.
+frontend:
+  themes: !include_dir_merge_named themes
+
+lovelace:
+  resource_mode: yaml
+  resources:
+    - url: /local/ha-dashboard/ha-dashboard.js?v=1
+      type: module
+  dashboards:
+    jonsim-home:
+      mode: yaml
+      filename: lovelace-dashboard.yaml
+      title: Home
+      icon: mdi:home-outline
+      show_in_sidebar: true

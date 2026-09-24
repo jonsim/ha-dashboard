@@ -1,0 +1,25 @@
+{
+  "name": "jonsim-ha-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build && vite build --config vite.dashboard.config.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "^5.2.6",
+    "@fontsource/lekton": "^5.2.5",
+    "lit": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "jsdom": "^27.0.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9",
+    "vitest": "^3.2.4"
+  },
+  "packageManager": "pnpm@11.19.0"
+}

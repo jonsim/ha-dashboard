@@ -1,0 +1,110 @@
+title: Home
+theme: Jonsim Dashboard
+
+views:
+  - title: Home
+    path: home
+    type: custom:jonsim-dashboard-view
+    active_path: /jonsim-home/home
+    navigation: &navigation
+      - { label: Home, icon: "⌂", path: /jonsim-home/home, enabled: true }
+      - { label: Climate, icon: "≈", path: /jonsim-home/climate, enabled: true }
+      - { label: Devices, icon: "◇", path: /jonsim-home/devices, enabled: false }
+      - { label: Automations, icon: "↻", path: /jonsim-home/automations, enabled: false }
+    theme: { sun_entity: sun.sun, dawn_offset_minutes: 0, dusk_offset_minutes: 0, default_mode: day }
+    cards:
+      - type: custom:jonsim-weather-card
+        title: Weather
+        eyebrow: Outside now
+        entity: weather.home
+        apparent_temperature: sensor.feels_like
+        rain_until: sensor.rain_outlook
+
+      - type: custom:jonsim-presence-card
+        title: Who's home
+        people: [person.jon, person.alex]
+
+      - type: custom:jonsim-alerts-card
+        clear_label: Doors secure · no leaks · alarm ready
+        alerts:
+          - { entity: binary_sensor.front_door, label: Front door open, severity: critical, active_states: ["on", "open"] }
+          - { entity: binary_sensor.kitchen_leak, label: Kitchen leak, severity: critical, active_states: ["on", "detected"] }
+          - { entity: binary_sensor.study_window, label: Study window, detail: Check before leaving, severity: warning, active_states: ["on", "open"] }
+
+      - type: custom:jonsim-agenda-card
+        title: Coming up
+        entities: [sensor.next_collection, calendar.family, sensor.parcel]
+
+      - type: custom:jonsim-energy-card
+        power: sensor.house_power
+        today: sensor.energy_today
+        cost: sensor.energy_cost_today
+        peak: sensor.monthly_peak
+
+      - type: custom:jonsim-rooms-card
+        title: Rooms
+        mode: exceptions
+        max_items: 4
+        rooms: &rooms
+          # Replace these sample IDs with matching entities from your instance.
+          - name: Hall
+            icon: "⌂"
+            temperature: sensor.hall_temperature
+            humidity: sensor.hall_humidity
+            light: light.hall
+            temperature_thresholds: &temperature_thresholds { warning_below: 17, critical_below: 14, warning_above: 24, critical_above: 28 }
+            humidity_thresholds: &humidity_thresholds { warning_below: 35, critical_below: 25, warning_above: 65, critical_above: 75 }
+            actions:
+              - { label: Toggle lights, icon: "✦", domain: light, service: toggle, target: { entity_id: light.hall } }
+          - name: Living room
+            icon: "◇"
+            temperature: sensor.living_temperature
+            humidity: sensor.living_humidity
+            light: light.living_room
+            climate: climate.living_room
+            temperature_thresholds: *temperature_thresholds
+            humidity_thresholds: *humidity_thresholds
+            actions:
+              - { label: Toggle lights, icon: "✦", domain: light, service: toggle, target: { entity_id: light.living_room } }
+          - name: Kitchen
+            icon: "◫"
+            temperature: sensor.kitchen_temperature
+            humidity: sensor.kitchen_humidity
+            light: light.kitchen
+            temperature_thresholds: *temperature_thresholds
+            humidity_thresholds: *humidity_thresholds
+          - name: Study
+            icon: "□"
+            temperature: sensor.study_temperature
+            humidity: sensor.study_humidity
+            light: light.study
+            opening: binary_sensor.study_window
+            temperature_thresholds: *temperature_thresholds
+            humidity_thresholds: *humidity_thresholds
+          - name: Bedroom
+            icon: "▱"
+            temperature: sensor.bedroom_temperature
+            humidity: sensor.bedroom_humidity
+            light: light.bedroom
+            temperature_thresholds: *temperature_thresholds
+            humidity_thresholds: *humidity_thresholds
+          - name: Utility
+            icon: "○"
+            temperature: sensor.utility_temperature
+            humidity: sensor.utility_humidity
+            light: light.utility
+            temperature_thresholds: *temperature_thresholds
+            humidity_thresholds: *humidity_thresholds
+
+  - title: Climate
+    path: climate
+    type: custom:jonsim-dashboard-view
+    active_path: /jonsim-home/climate
+    navigation: *navigation
+    theme: { sun_entity: sun.sun, default_mode: day }
+    cards:
+      - type: custom:jonsim-rooms-card
+        title: Room climate
+        eyebrow: Temperature · humidity · activity
+        mode: grid
+        rooms: *rooms
